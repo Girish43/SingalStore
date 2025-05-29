@@ -15,6 +15,10 @@ export class TodosService{
             ...todo
         }as Todo;
     }
+    async deleteTodo(id:string)
+    {
+        await sleep(500)
+    }
 
 }
 async function sleep(ms:number) {
