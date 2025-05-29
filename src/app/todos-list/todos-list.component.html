@@ -3,7 +3,7 @@
 
 <mat-label>Enter a T0DO and press Enter</mat-label>
 
-<input matInput #input>
+<input matInput #input (keyup.enter)="onAddTodo(input.value)">
 <mat-icon matSuffix>edit</mat-icon>
 </mat-form-field>
 
