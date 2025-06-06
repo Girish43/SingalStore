@@ -19,6 +19,11 @@ export class TodosService{
     {
         await sleep(500)
     }
+    async updateTodo(id:string,completed:boolean)
+    {
+        
+await sleep(500)
+    }
 
 }
 async function sleep(ms:number) {
