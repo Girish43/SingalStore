@@ -6,6 +6,8 @@ import { MatButtonToggle, MatButtonToggleGroup, MatButtonToggleModule } from '@a
 import { MatListModule, MatSelectionList } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { TodosStore } from '../todos.store';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -19,7 +21,8 @@ import { TodosStore } from '../todos.store';
 MatButtonToggleGroup,
 MatButtonToggle,
 MatSelectionList,MatListModule,       
-MatIconModule 
+MatIconModule,
+CommonModule
   ],
   templateUrl: './todos-list.component.html',
   styleUrl: './todos-list.component.css'
@@ -33,5 +36,8 @@ export class TodosListComponent {
   {
     event.stopPropagation()
 await this.store.deleteTodo(id)
+  }
+  async onTodoToggled(id:string,completed:boolean){
+    await this.store.updateTodo(id,completed)
   }
 }
