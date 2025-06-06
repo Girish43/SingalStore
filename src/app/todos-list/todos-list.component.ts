@@ -1,11 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject, viewChild } from '@angular/core';
 import { MatFormField, MatFormFieldModule, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MatButtonToggle, MatButtonToggleGroup, MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup, MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule, MatSelectionList } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
-import { TodosStore } from '../todos.store';
+import { TodosFilter, TodosStore } from '../todos.store';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -29,6 +29,12 @@ CommonModule
 })
 export class TodosListComponent {
   store = inject(TodosStore)
+  filter=viewChild.required(MatButtonToggleGroup)
+  constructor(){
+    effect(()=>{const filter=this.filter();
+      filter.value=this.store.filter()
+    })
+  }
   async onAddTodo(title:string){
     await this.store.addTodo(title)
   }
@@ -39,5 +45,10 @@ await this.store.deleteTodo(id)
   }
   async onTodoToggled(id:string,completed:boolean){
     await this.store.updateTodo(id,completed)
+  }
+  onFilterTodos(event:MatButtonToggleChange)
+  {
+    const filter=event.value as TodosFilter
+    this.store.updateFilter(filter)
   }
 }
